@@ -61,16 +61,16 @@ spec:
               value: ""
             - name: LOG_LEVEL
               value: {{ .Values.logLevel | quote }}
-            #- name: SECRET_USERNAME_ENV_VAR
-            #  valueFrom:
-            #    secretKeyRef:
-            #      name: mysecret
-             #     key: username
-            #- name: SECRET_PASSWORD_ENV_VAR
-            # valueFrom:
-            #    secretKeyRef:
-            #     name: mysecret
-            #      key: password
+            - name: SECRET_USERNAME_ENV_VAR
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: username
+            - name: SECRET_PASSWORD_ENV_VAR
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: password
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
