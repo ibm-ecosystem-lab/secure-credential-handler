@@ -12,7 +12,7 @@
     <img src="https://img.shields.io/badge/license-Apache2-blue.svg?style=flat" alt="Apache 2">
 </p>
 
-# Reference Application integrating with IBM Secret Manager Service
+# Reference Application - Integrating with IBM Cloud Secret Manager Service
 
 This Reference application is build on React Framework, uses the IBM Secret Manager Service to secure the application dependent secrets. In this sample application, you will configure the application secrets as part of the IBM Secret Manager that is deployed as the IBM Cloud Service. As you configure the secrets, you will generate the Secret ID for the secret that to be used by the application. 
 
