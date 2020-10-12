@@ -25,8 +25,15 @@ class SimpleList extends Component {
   onRowClick = id => {
     this.setState({ selectedRow: id });
   };
+  handlePasswordChange(e) {
+    this.setState({ password: e.target.value });
+  }
 
+  toggleShow() {
+    this.setState({ hidden: !this.state.hidden });
+  }
   renderRow = (row, id) => {
+
     return (
       <StructuredListRow key={id} onClick={() => this.onRowClick(id)}>
         <div>
@@ -35,7 +42,6 @@ class SimpleList extends Component {
             value="row-0"
             title="row-0"
             name="row-0"
-            //defaultChecked={this.state.selectedRow === id}
             checked={this.state.selectedRow === id}
           />
           <StructuredListCell>
@@ -45,15 +51,34 @@ class SimpleList extends Component {
             />
           </StructuredListCell>
         </div>
+        {
 
-        {this.columns.map(col => {
+          this.columns.map((col, i) => {
+            if (row[col] !== "password" && col == "SecretValue") {
+              return (
+                <StructuredListCell key={col} className="simple-list-row">
+                  <div>
+                    <input
+                      type={this.state.hidden ? "password" : "text"}
+                      value={this.state.password}
+                      onChange={this.handlePasswordChange}
+                    />
+                    <button onClick={this.toggleShow}>Show / Hide</button>
+                  </div>
+                </StructuredListCell>
+              );
 
-          return (
-            <StructuredListCell key={col} className="simple-list-row">
-              {row[col]}
-            </StructuredListCell>
-          );
-        })}
+            } else {
+
+              return (
+
+                <StructuredListCell key={col} className="simple-list-row">
+                  {row[col]}
+                </StructuredListCell>
+              );
+
+            }
+          })}
       </StructuredListRow>
     );
   };
@@ -62,14 +87,10 @@ class SimpleList extends Component {
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
-        console.log(data.status)
         this.setState({ items: data });
       });
   }
   render() {
-    console.log(this.state.items);
-    console.log("==================");
     const data = this.state.items;
     return (
       <div className="bx--grid pattern-container">

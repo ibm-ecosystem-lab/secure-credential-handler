@@ -64,12 +64,12 @@ spec:
             - name: SECRET_USERNAME_ENV_VAR
               valueFrom:
                 secretKeyRef:
-                  name: mysecret
+                  name: secure-handler-secret
                   key: username
             - name: SECRET_PASSWORD_ENV_VAR
               valueFrom:
                 secretKeyRef:
-                  name: mysecret
+                  name: secure-handler-secret
                   key: password
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
