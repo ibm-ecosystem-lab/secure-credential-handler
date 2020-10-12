@@ -18,89 +18,91 @@ class SimpleList extends Component {
     super(props);
     this.state = {
       items: [],
-      selectedRow: 0,
-      hidden: true,
+      selectedRow: 0
     };
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.toggleShow = this.toggleShow.bind(this);
   }
 
   onRowClick = id => {
     this.setState({ selectedRow: id });
   };
-  handlePasswordChange(e) {
-    this.setState({ password: e.target.value });
-  }
 
-  toggleShow() {
-    this.setState({ hidden: !this.state.hidden });
-  }
+  renderRow = (row, id) => {
+    return (
+      <StructuredListRow key={id} onClick={() => this.onRowClick(id)}>
+        <div>
+          <StructuredListInput
+            id={`row-${id}`}
+            value="row-0"
+            title="row-0"
+            name="row-0"
+            //defaultChecked={this.state.selectedRow === id}
+            checked={this.state.selectedRow === id}
+          />
+          <StructuredListCell>
+            <Icon
+              className="bx--structured-list-svg"
+              icon={iconCheckmarkSolid}
+            />
+          </StructuredListCell>
+        </div>
 
+        {this.columns.map(col => {
+
+          return (
+            <StructuredListCell key={col} className="simple-list-row">
+              {row[col]}
+            </StructuredListCell>
+          );
+        })}
+      </StructuredListRow>
+    );
+  };
   componentDidMount() {
     const apiUrl = '/health';
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
         console.log(data)
+        console.log(data.status)
         this.setState({ items: data });
       });
   }
-  renderTableHeader() {
-    let header = ["SecretName", "SecretValue", "Action"]
-    return header.map((key, index) => {
-      return <th key={index}>{key.toUpperCase()}</th>
-    })
-  }
-
   render() {
-    console.log(this.state.items);
+    const data = this.state.items;
     return (
-      <div>
-        <h1 id='title' class="pattern-title">Secrets</h1>
-        <table id='students'>
-          <tbody>
-            <tr>{this.renderTableHeader()}</tr>
-            {this.renderTableData()}
-          </tbody>
-        </table>
+      <div className="bx--grid pattern-container">
+        <Header
+          title="Secrets"
+          subtitle="This application demonstrates secrets management with IBM Secrets Manager and Continous Delivery with ArgoCD."
+        />
+        <div className="bx--row">
+          <div className="bx--col-xs-12">
+            <StructuredListWrapper selection border>
+              <StructuredListHead>
+                <StructuredListRow head>
+                  <StructuredListCell head />
+                  {this.columns.map(key => {
+                    return (
+                      <StructuredListCell head key={key}>
+                        {key.charAt(0).toUpperCase() +
+                          key.slice(1).replace(/([A-Z])/g, " $1")}
+                      </StructuredListCell>
+                    );
+                  })}
+                </StructuredListRow>
+              </StructuredListHead>
+
+              <StructuredListBody>
+                {data.map((row, i) => {
+                  return this.renderRow(row, i);
+                })}
+              </StructuredListBody>
+            </StructuredListWrapper>
+          </div>
+        </div>
       </div>
-    )
+    );
   }
-  renderTableData() {
-
-    return this.state.items.map((student, index) => {
-      console.log(index)
-      const { SecretName, SecretValue } = student //destructuring
-      if (index == 1) {
-        return (
-          <tr>
-            <td>{SecretName}</td>
-            <td>
-              <input
-                type={this.state.hidden ? "password" : "text"}
-                value={SecretValue}
-                onChange={this.handlePasswordChange}
-              />
-            </td>
-            <td>
-              <button onClick={this.toggleShow}>Show / Hide</button>
-            </td>
-          </tr>
-        )
-      } else {
-        return (
-          <tr>
-            <td>{SecretName}</td>
-            <td>{SecretValue}</td>
-            <td>NA</td>
-          </tr>
-        )
-      }
-
-    })
-  }
-
-
 }
 
 export default SimpleList;
