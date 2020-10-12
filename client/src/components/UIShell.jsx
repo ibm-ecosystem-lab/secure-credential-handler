@@ -23,7 +23,7 @@ const Fade20 = () => (
 );
 
 class UIShell extends Component {
-  header = "Garage for Cloud Catalyst";
+  header = "IBM GSI Ecosystem";
   menuTitle = "Secret Manager";
   menuItems = [
     "Secrets"
