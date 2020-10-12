@@ -12,118 +12,32 @@
     <img src="https://img.shields.io/badge/license-Apache2-blue.svg?style=flat" alt="Apache 2">
 </p>
 
-# React UI Patterns with Node.js
+# Reference Application integrating with IBM Secret Manager Service
 
-React is a popular framework for creating user interfaces in modular components. In this sample application, you will create a web application using Express and React to serve web pages in Node.js, complete with standard best practices, including a health check and application metric monitoring.
+This Reference application is build on React Framework, uses the IBM Secret Manager Service to secure the application dependent secrets. In this sample application, you will configure the application secrets as part of the IBM Secret Manager that is deployed as the IBM Cloud Service. As you configure the secrets, you will generate the Secret ID for the secret that to be used by the application. 
 
-This code pattern contains 12 popular UI patterns that make it very easy to construct a dashboard application.
+Similarly in the application, the parameter of the secret configuration to be configured as part of the 'deployment.yaml' configuration such as the name, and the secret properties such as the username and password in this scenario which shall be used by the application.  There shall be no secret related information is persisted inside the application. 
 
-This app contains an opinionated set of components for modern web development, including:
+This ensures the secret information are protected and secured by the IBM Secret Manager, but will be available to the application for its process.
 
-* [React](https://facebook.github.io/react/)
-* [Webpack](https://webpack.github.io/)
-* [Sass](http://sass-lang.com/) 
-* [gulp](http://gulpjs.com/)
-* [Carbon](https://www.carbondesignsystem.com/)
+## How is Secret Information made avaiable to the application.
 
-### Deploying 
-
-After you have created a new git repo from this git template, remember to rename the project.
-Edit `package.json` and change the default name to the name you used to create the template.
-
-Make sure you are logged into the IBM Cloud using the IBM Cloud CLI and have access 
-to you development cluster. If you are using OpenShift make sure you have logged into OpenShift CLI on the command line.
+Once the Application is made available in the git repo, IBM Cloud Native toolkit cli shall be made used to deploy the application on the Openshift Platform.
+The IBM Cloud Native toolkit cli toolkit can installed to your local environment as below
 
 ```$bash
 npm install -g @ibmgaragecloud/cloud-native-toolkit-cli
 ```
 
-Use the IBM Garage for Cloud CLI to register the GIT Repo with Tekton or Jenkins 
+Once the Toolkit CLI is installed, Use the IBM Garage for Cloud CLI to register the GIT Repo with Tekton or Jenkins.
 
 ```$bash
 oc sync <project> --dev
 oc pipeline
 ```
 
-Ensure you have the Cloud-Native Toolkit installed in your cluster to make this method of pipeline registry quick and easy [Cloud-Native Toolkit](https://cloudnativetoolkit.dev/)
+As you deploy the application using the tekton pipeline, one of the task is to pull the Application secrets from the IBM Secret Manager service. This tasks connects securely to the IBM Secret manager using the IBM Token using the IBM Cloud API Key, then pulls the relevant secured data from the Secret Managar using the Secret ID that the application uses. This information is then made available to the application environment as "secrets" configuration which the application can access for its secured channel access
 
-#### Native Application Development
-
-Install the latest [Node.js](https://nodejs.org/en/download/) 6+ LTS version.
-
-Once the Node toolchain has been installed, you can download the project dependencies with:
-
-```bash
-npm install
-cd client; npm install; cd ..
-npm run build
-npm run start
-```
-
-Modern web applications require a compilation step to prepare your ES2015 JavaScript or Sass stylesheets into compressed Javascript ready for a browser. Webpack is used for bundling your JavaScript sources and styles into a `bundle.js` file that your `index.html` file can import. 
-
-***Webpack***
-
-For development mode, use `webpack -d` to leave the sources uncompress and with the symbols intact.
-
-For production mode, use `webpack -p` to compress and obfuscate your sources for development usage.
-
-***Gulp***
-
-Gulp is a task runner for JavaScript. You can run the above Webpack commands in by running:
-```bash
-gulp
-```
-
-To run your application locally:
-```bash
-npm run start
-```
-
-Your application will be running at `http://localhost:3000`.  You can access the `/health` and `/appmetrics-dash` endpoints at the host.
-
-<!--
-#### IBM Cloud Developer Tools
-
-Install [IBM Cloud Developer Tools](https://cloud.ibm.com/docs/cli?topic=cloud-cli-getting-started) on your machine by running the following command:
-```
-curl -sL https://ibm.biz/idt-installer | bash
-```
-
-Your application will be compiled with Docker containers. To compile and run your app, run:
-```bash
-ibmcloud dev build
-ibmcloud dev run
-```
-
-This will launch your application locally. When you are ready to deploy to IBM Cloud on Cloud Foundry or Kubernetes, run one of the following commands:
-```bash
-ibmcloud dev deploy -t buildpack
-ibmcloud dev deploy -t container
-```
-
-You can build and debug your app locally with:
-```bash
-ibmcloud dev build --debug
-ibmcloud dev debug
-```
--->
-
-##### Session Store
-
-You may see this warning when running `ibmcloud dev run`:
-```
-Warning: connect.session() MemoryStore is not
-designed for a production environment, as it will leak
-memory, and will not scale past a single process.
-```
-
-When deploying to production, it is best practice to configure sessions to be stored in an external persistence service.
-
-## Next Steps
-
-* Learn more about augmenting your Node.js applications on IBM Cloud with the [Node Programming Guide](https://cloud.ibm.com/docs/node?topic=nodejs-getting-started).
-* Explore other [sample applications](https://cloud.ibm.com/developer/appservice/starter-kits) on IBM Cloud.
 
 ## License
 
