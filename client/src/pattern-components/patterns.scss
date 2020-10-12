@@ -5,19 +5,24 @@
   text-align: left;
   background-color: lightgray;
 }
+
 .display-form-item {
   margin: 20px 0 20px 0;
 }
+
 .simple-list-row {
   text-align: left;
 }
+
 .left-align {
   display: block !important;
   text-align: left;
 }
+
 .center-align {
   text-align: center;
 }
+
 .dropdown-invalid {
   max-height: 12.5rem;
   display: block;
@@ -29,44 +34,92 @@
   line-height: 1.5;
   text-align: left;
 }
+
 .pattern-description {
   padding: 20px 0 20px 0;
   line-height: 1.5;
 }
+
 .pattern-title {
   font-size: 2rem;
   font-weight: 800;
 }
+
 .bx--structured-list {
   margin-bottom: 2rem !important;
 }
+
 .bx--data-table-v2-container {
   min-width: 0 !important;
 }
+
 .list-to-list-moving-btn {
   margin: 5px;
 }
+
 .list-to-list-moving-btn-container {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .bx--grid {
   margin: 0 !important;
   padding: 0 !important;
 }
+
 .bx--inline-notification__icon {
   display: inline-block !important;
 }
+
 .bx--inline-notification__text-wrapper {
   max-width: 100% !important;
 }
+
 .add-delete-row-buttons {
   margin-left: 15px;
   margin-right: 15px;
 }
+
 .bx--tile {
   background-color: #fff !important;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
   border: 1px solid #dfe3e6;
+}
+
+#title {
+  text-align: left;
+  padding-top: 22px;
+  padding-bottom: 5px;
+  font-family: arial, sans-serif;
+}
+
+#students {
+  text-align: center;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  border: 3px solid #ddd;
+  width: 100%;
+}
+
+#students td,
+#students th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#students tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#students tr:hover {
+  background-color: #ddd;
+}
+
+#students th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #4CAF50;
+  color: white;
 }
