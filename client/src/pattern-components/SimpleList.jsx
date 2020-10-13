@@ -6,9 +6,13 @@ import {
   StructuredListHead,
   StructuredListBody,
   StructuredListInput,
-  Icon
+  Icon,
+  TextInput,
+  Button
 } from "carbon-components-react";
 import { iconCheckmarkSolid } from "carbon-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import Header from "./Header";
 import "./patterns.scss";
 
@@ -18,10 +22,20 @@ class SimpleList extends Component {
     super(props);
     this.state = {
       items: [],
-      selectedRow: 0
+      selectedRow: 0,
+      hidden: true,
+      icon: faEye
     };
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.toggleShow = this.toggleShow.bind(this);
+  }
+  handlePasswordChange(e) {
+    this.setState({ password: e.target.value });
   }
 
+  toggleShow() {
+    this.setState({ hidden: !this.state.hidden, icon: faEyeSlash });
+  }
   onRowClick = id => {
     this.setState({ selectedRow: id });
   };
@@ -46,13 +60,26 @@ class SimpleList extends Component {
           </StructuredListCell>
         </div>
 
-        {this.columns.map(col => {
+        {this.columns.map((col, index) => {
 
-          return (
-            <StructuredListCell key={col} className="simple-list-row">
-              {row[col]}
-            </StructuredListCell>
-          );
+          if (id === 1 && index == 1) {
+            return (
+              <div>
+                <TextInput
+                  type={this.state.hidden ? "password" : "text"}
+                  value={row[col]}
+                  onChange={this.handlePasswordChange} />
+                <FontAwesomeIcon icon={this.state.icon} id="passwordhide" onClick={this.toggleShow} id="passwordhide" />
+
+              </div>
+            );
+          } else {
+            return (
+              <StructuredListCell key={col} className="simple-list-row">
+                {row[col]}
+              </StructuredListCell>
+            );
+          }
         })}
       </StructuredListRow>
     );
